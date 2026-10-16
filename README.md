@@ -55,7 +55,7 @@ event/
 ### 1. Environment Configuration
 Create or verify `.env.local` in the project root:
 ```env
-MONGODB_URI=mongodb+srv://event:Nagoor271@test.gg7r1on.mongodb.net/event_leads?retryWrites=true&w=majority
+MONGODB_URI=
 GEMINI_API_KEY=your_gemini_api_key
 ```
 
@@ -79,12 +79,10 @@ Open **[http://localhost:3000](http://localhost:3000)** in your browser.
    - Clear typography hierarchy using Inter.
    - Status indicators use natural semantic tones: Amber for Needs Follow-up, Blue for In Conversation, Emerald for Followed Up.
 
-2. **MongoDB Atlas DNS Resolution Fix**:
-   - Resolved Windows local ISP `querySrv ECONNREFUSED` errors by configuring reliable DNS fallbacks (`8.8.8.8`, `1.1.1.1`) inside `src/lib/mongodb.ts`.
 
-3. **Gemini 2.5 Flash Integration**:
+2. **Gemini 2.5 Flash Integration**:
    - Uses the latest high-speed `gemini-2.5-flash` model.
    - Custom prompts ensure output is authentic, professional, and ready to send without robotic boilerplate.
 
-4. **Spreadsheet Table & Card View Flexibility**:
+3. **Spreadsheet Table & Card View Flexibility**:
    - Supports both detailed card browsing and compact spreadsheet scanning based on user preference.
