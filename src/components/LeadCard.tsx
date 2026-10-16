@@ -7,6 +7,7 @@ import {
   Copy, Check, Trash2, Edit3, ChevronDown, ChevronUp, ExternalLink,
   FileText
 } from 'lucide-react';
+import StatusDropdown from './StatusDropdown';
 
 interface LeadCardProps {
   lead: Lead;
@@ -15,33 +16,12 @@ interface LeadCardProps {
   onUpdate: (lead: Lead) => void;
 }
 
-const STATUS_CONFIG: Record<string, { label: string; badgeClass: string }> = {
-  'pending': {
-    label: 'Needs Follow-Up',
-    badgeClass: 'bg-amber-50 text-amber-800 border-amber-200 hover:bg-amber-100',
-  },
-  'in-progress': {
-    label: 'In Conversation',
-    badgeClass: 'bg-sky-50 text-sky-800 border-sky-200 hover:bg-sky-100',
-  },
-  'completed': {
-    label: 'Followed Up',
-    badgeClass: 'bg-emerald-50 text-emerald-800 border-emerald-200 hover:bg-emerald-100',
-  },
-  'not-needed': {
-    label: 'Not Needed',
-    badgeClass: 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200',
-  },
-};
-
 export default function LeadCard({ lead, onEdit, onDelete, onUpdate }: LeadCardProps) {
   const [expanded, setExpanded] = useState(false);
   const [loadingAi, setLoadingAi] = useState<'summarize' | 'draft' | null>(null);
   const [copiedDraft, setCopiedDraft] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
-
-  const status = STATUS_CONFIG[lead.followUpStatus] || STATUS_CONFIG['pending'];
 
   const handleStatusChange = async (newStatus: string) => {
     try {
@@ -117,36 +97,29 @@ export default function LeadCard({ lead, onEdit, onDelete, onUpdate }: LeadCardP
       {/* Card Content */}
       <div className="p-4 sm:p-5">
         {/* Contact Header */}
-        <div className="flex items-start justify-between gap-3 mb-3">
-          <div className="flex items-center gap-3 min-w-0">
-            <div className="w-9 h-9 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-xs flex-shrink-0 shadow-2xs">
+        <div className="flex items-start justify-between gap-2.5 mb-3">
+          <div className="flex items-center gap-2.5 min-w-0 flex-1">
+            <div className="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-xs flex-shrink-0 shadow-2xs">
               {initials}
             </div>
-            <div className="min-w-0">
-              <h3 className="font-semibold text-slate-900 text-sm sm:text-base leading-tight truncate">
+            <div className="min-w-0 flex-1">
+              <h3 className="font-semibold text-slate-900 text-sm leading-tight truncate">
                 {lead.name}
               </h3>
               <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-0.5 truncate">
-                <Building2 size={12} className="text-slate-400 flex-shrink-0" />
+                <Building2 size={11} className="text-slate-400 flex-shrink-0" />
                 <span className="truncate font-medium text-slate-600">{lead.company}</span>
               </div>
             </div>
           </div>
 
-          {/* Status Dropdown */}
-          <div className="relative flex-shrink-0">
-            <select
-              value={lead.followUpStatus}
-              onChange={(e) => handleStatusChange(e.target.value)}
-              className={`text-2xs font-semibold px-2.5 py-1 rounded-full border cursor-pointer appearance-none pr-6 focus:outline-none transition-colors ${status.badgeClass}`}
-            >
-              <option value="pending">Needs Follow-Up</option>
-              <option value="in-progress">In Conversation</option>
-              <option value="completed">Followed Up</option>
-              <option value="not-needed">Not Needed</option>
-            </select>
-            <ChevronDown size={11} className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none opacity-60" />
-          </div>
+          {/* Status Dropdown - Neat, single-line pill */}
+          <StatusDropdown
+            value={lead.followUpStatus}
+            onChange={handleStatusChange}
+            align="right"
+            className="flex-shrink-0"
+          />
         </div>
 
         {/* Event context pill */}
