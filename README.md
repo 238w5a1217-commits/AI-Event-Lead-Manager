@@ -12,7 +12,7 @@ A clean, modern full-stack CRM application designed specifically for business pr
 - **AI Follow-up Email Drafting**: Gemini drafts personalized follow-up emails referencing conversation details with instant one-click copy or direct `mailto:` launch.
 - **Dual View Modes**: Switch between **Card View** (great for browsing notes and AI actions) and **Spreadsheet Table View** (great for quick multi-lead scanning).
 - **Fast Search & Event Filtering**: Live debounced search across contact name, company, email, notes, and filter by event or status tab.
-- **Demo Data Seeder**: Built-in 1-click sample data loader to test functionality immediately.
+  
 
 ---
 
